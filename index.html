@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Eligibility Checker</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #f5f7ff);
+      min-height: 100vh;
+      color: #222;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 55px 20px 35px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      color: #1565c0;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    /* MAIN CARD */
+    .container {
+      width: 90%;
+      max-width: 650px;
+      margin: 0 auto 50px;
+      background: white;
+      padding: 35px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1565c0;
+    }
+
+    /* FORM */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: #333;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #1565c0;
+    }
+
+    /* BUTTON */
+    .check-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 9px;
+      background: #1565c0;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .check-btn:hover {
+      background: #0d47a1;
+    }
+
+    /* RESULT */
+    .result {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    .result h3 {
+      margin-bottom: 12px;
+    }
+
+    .result ul {
+      margin-top: 10px;
+      padding-left: 25px;
+    }
+
+    .result li {
+      margin-bottom: 10px;
+    }
+
+    .success {
+      background: #e8f5e9;
+      border: 2px solid #43a047;
+      color: #1b5e20;
+    }
+
+    .fail {
+      background: #ffebee;
+      border: 2px solid #e53935;
+      color: #b71c1c;
+    }
+
+    .warn {
+      background: #fff8e1;
+      border: 2px solid #ffb300;
+      color: #795548;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Eligibility Checker</h1>
+    <p>Find scholarships, welfare schemes and opportunities you may qualify for.</p>
+  </section>
+
+
+  <!-- ELIGIBILITY FORM -->
+  <div class="container">
+
+    <h2>Check Your Eligibility</h2>
+
+    <form id="eligibilityForm">
+
+      <!-- NAME -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your name"
+        >
+      </div>
+
+
+      <!-- AGE -->
+      <div class="form-group">
+        <label for="age">Age</label>
+
+        <input
+          type="number"
+          id="age"
+          placeholder="Enter your age"
+          min="1"
+        >
+      </div>
+
+
+      <!-- INCOME -->
+      <div class="form-group">
+        <label for="income">Annual Family Income (₹)</label>
+
+        <input
+          type="number"
+          id="income"
+          placeholder="Example: 200000"
+          min="0"
+        >
+      </div>
+
+
+      <!-- CATEGORY -->
+      <div class="form-group">
+        <label for="category">Category</label>
+
+        <select id="category">
+          <option value="">Select Category</option>
+          <option value="SC">SC</option>
+          <option value="ST">ST</option>
+          <option value="BC">BC</option>
+          <option value="OC">OC</option>
+        </select>
+      </div>
+
+
+      <!-- COURSE -->
+      <div class="form-group">
+        <label for="course">Course</label>
+
+        <select id="course">
+          <option value="">Select Course</option>
+          <option value="B.Tech">B.Tech</option>
+          <option value="B.Sc">B.Sc</option>
+          <option value="B.Com">B.Com</option>
+          <option value="BA">BA</option>
+          <option value="Diploma">Diploma</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+
+      <!-- BUTTON -->
+      <button
+        type="button"
+        class="check-btn"
+        onclick="checkEligibility()"
+      >
+        Check My Eligibility
+      </button>
+
+    </form>
+
+
+    <!-- RESULT SECTION -->
+    <div id="result" class="result"></div>
+
+  </div>
+
+
+  <footer>
+    © 2026 Eligibility Checker
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+  <script>
+
+    function checkEligibility() {
+
+      // Get values from the form
+      const name = document.getElementById("name").value.trim();
+
+      const age = Number(
+        document.getElementById("age").value
+      );
+
+      const income = Number(
+        document.getElementById("income").value
+      );
+
+      const category =
+        document.getElementById("category").value;
+
+      const course =
+        document.getElementById("course").value;
+
+      const result =
+        document.getElementById("result");
+
+
+      // Check whether all fields are filled
+      if (
+        !name ||
+        !age ||
+        !income ||
+        !category ||
+        !course
+      ) {
+
+        result.style.display = "block";
+
+        result.className = "result warn";
+
+        result.innerHTML =
+          "<h3>⚠ Please fill all fields.</h3>";
+
+        return;
+      }
+
+
+      // Array to store matching opportunities
+      let matches = [];
+
+
+      // B.Tech scholarship
+      if (
+        course === "B.Tech" &&
+        income <= 250000
+      ) {
+
+        matches.push(
+          "🎓 Post-Matric Scholarship"
+        );
+      }
+
+
+      // SC / ST reimbursement
+      if (
+        (category === "SC" || category === "ST") &&
+        income <= 250000
+      ) {
+
+        matches.push(
+          "🏛 SC/ST Fee Reimbursement"
+        );
+      }
+
+
+      // BC scholarship
+      if (
+        category === "BC" &&
+        income <= 200000
+      ) {
+
+        matches.push(
+          "💰 BC Scholarship"
+        );
+      }
+
+
+      // Age based opportunity
+      if (age >= 18) {
+
+        matches.push(
+          "💼 Government Job Notifications"
+        );
+      }
+
+
+      // Welfare schemes
+      if (income <= 300000) {
+
+        matches.push(
+          "🏠 Telangana Welfare Schemes"
+        );
+      }
+
+
+      // Show result box
+      result.style.display = "block";
+
+
+      // If nothing matches
+      if (matches.length === 0) {
+
+        result.className = "result fail";
+
+        result.innerHTML =
+          "<h3>❌ No matching opportunities found</h3>" +
+          "<p>Based on the information entered, no matching opportunity was found.</p>";
+
+        return;
+      }
+
+
+      // If opportunities are found
+      result.className = "result success";
+
+
+      let html =
+        `<h3>✅ Hello, ${name}!</h3>`;
+
+      html +=
+        `<p><b>You are eligible for:</b></p>`;
+
+      html += "<ul>";
+
+
+      // Add every matching opportunity
+      matches.forEach(function(item) {
+
+        html += `<li>${item}</li>`;
+
+      });
+
+
+      html += "</ul>";
+
+
+      // Put result on page
+      result.innerHTML = html;
+
+    }
+
+  </script>
+
+</body>
+</html>
