@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eligibility Finder</title>
+<style>
+:root{--purple:#6848ef;--pink:#d83bd0;--ink:#172033;--muted:#667085;--line:#e7e9f0;--bg:#f7f8fc;--green:#067647;--amber:#9a6700;--blue:#175cd3}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit}button{cursor:pointer}
+.nav{height:78px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:850}.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;display:grid;place-items:center;font-weight:900}
+.navlinks{display:flex;gap:32px;color:#667085;font-weight:650}.navlinks span{cursor:pointer}
+.hero{padding:58px 7% 50px;background:radial-gradient(circle at 85% 25%,#e8ddff 0,transparent 30%),linear-gradient(135deg,#fff,#f5f1ff)}
+.badge{display:inline-block;padding:8px 12px;border-radius:999px;background:#eeeaff;color:#6043df;font-size:12px;font-weight:850}
+.hero h1{font-size:clamp(40px,5vw,64px);line-height:1.04;letter-spacing:-2.5px;margin:18px 0 12px}.gradient{color:transparent;background:linear-gradient(90deg,var(--purple),var(--pink));background-clip:text;-webkit-background-clip:text}
+.hero p{max-width:740px;color:var(--muted);font-size:18px;line-height:1.6;margin:0}
+.wrap{max-width:1160px;margin:auto;padding:24px 18px 70px}
+.savedbar{margin-bottom:18px}.savedhead{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px 18px;display:flex;justify-content:space-between;align-items:center}.savedhead button{border:0;border-radius:11px;background:#111827;color:#fff;padding:10px 15px;font-weight:850}
+.savedpanel{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:9px;padding:16px}.savedpanel.open{display:block}.saveditem{display:flex;justify-content:space-between;gap:15px;padding:11px 0;border-bottom:1px solid var(--line)}.saveditem:last-child{border-bottom:0}.saveditem button{border:0;background:none;color:#b42318;font-weight:800}
+.panel{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 16px 50px #1018280b;overflow:hidden}.head{padding:28px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:18px}.head h2{margin:0 0 7px;font-size:29px}.head p{margin:0;color:var(--muted)}.step{padding:10px 12px;height:max-content;background:#eeeaff;color:#6043df;border-radius:11px;font-size:11px;font-weight:900}
+.form{padding:30px 32px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:21px}.field{display:flex;flex-direction:column;gap:8px}.field.full{grid-column:1/-1}.field label{font-size:14px;font-weight:850}
+.field input,.field select{height:52px;width:100%;border:1px solid #cfd4df;border-radius:14px;background:#fff;color:#101828;padding:0 15px;outline:none;appearance:auto;caret-color:#6848ef}.field input::placeholder{color:#98a2b3;opacity:1}.field input:focus,.field select:focus{border-color:#7659ff;box-shadow:0 0 0 4px #7659ff18}.field input:-webkit-autofill,.field input:-webkit-autofill:hover,.field input:-webkit-autofill:focus{-webkit-text-fill-color:#101828;-webkit-box-shadow:0 0 0 1000px #fff inset;box-shadow:0 0 0 1000px #fff inset}
+.hint{font-size:12px;color:#98a2b3}.checks{display:flex;gap:10px;flex-wrap:wrap}.check{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#fafafa;border:1px solid var(--line);border-radius:11px}.check input{width:17px;height:17px}.disability-pct{display:none;align-items:center;gap:7px}.disability-pct.show{display:flex}.disability-pct input{width:90px;height:38px;padding:0 9px}
+.profile{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}.profile button{border:0;border-radius:11px;padding:10px 14px;font-weight:850}.saveprofile{background:#111827;color:#fff}.clearprofile{background:#f2f4f7;color:#344054}.msg{font-size:13px;color:var(--muted)}
+.find{margin-top:21px;width:100%;border:0;border-radius:14px;padding:16px;background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;font-weight:900;font-size:16px;box-shadow:0 10px 25px #6848ef20}.find:hover{transform:translateY(-1px)}
+.error{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:#fef3f2;color:#b42318;font-size:13px}.error.show{display:block}
+.results{display:none;margin-top:28px}.results-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:18px}.results-head h2{margin:0 0 6px;font-size:30px}.results-head p{margin:0;color:var(--muted)}.count{text-align:right;font-size:34px;font-weight:900}.count small{display:block;color:var(--muted);font-size:11px;font-weight:600}
+.controls{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:1fr 190px 190px;gap:10px;margin-bottom:15px}.controls input,.controls select{height:46px;border:1px solid #d0d5dd;border-radius:11px;padding:0 13px;outline:none;background:#fff;color:#101828;caret-color:#6848ef}.controls input::placeholder{color:#98a2b3;opacity:1}.controls input:-webkit-autofill,.controls input:-webkit-autofill:hover,.controls input:-webkit-autofill:focus{-webkit-text-fill-color:#101828;-webkit-box-shadow:0 0 0 1000px #fff inset;box-shadow:0 0 0 1000px #fff inset}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.filter{border:1px solid #d9dce5;background:#fff;color:#344054;border-radius:999px;padding:8px 13px;font-weight:750}.filter.active{background:#111827;color:#fff;border-color:#111827}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 25px #10182808}.cardtop{display:flex;justify-content:space-between;gap:10px}.icon{font-size:28px}.tag{font-size:11px;font-weight:850;color:#6043df;background:#eeeaff;border-radius:999px;padding:6px 9px}.card h3{font-size:18px;line-height:1.35;margin:13px 0 9px}.meta{display:flex;gap:6px;flex-wrap:wrap}.meta span{font-size:10px;font-weight:850;background:#f2f4f7;border-radius:7px;padding:6px 8px}.status.good{color:var(--green);background:#ecfdf3}.status.verify{color:var(--amber);background:#fff5cc}.status.browse{color:var(--blue);background:#eff8ff}.card p{color:#475467;font-size:13px;line-height:1.55}.checksline{color:#667085;font-size:11px;line-height:1.5;margin:10px 0}.card a{font-size:12px;color:#6043df;font-weight:850;text-decoration:none}.card button{border:0;border-radius:9px;padding:8px 10px;margin-top:10px;font-weight:800}.detail{background:#f2f4f7;color:#344054}.save{background:#fff1b8;color:#7a5300}.save.saved{background:#111827;color:#fff}
+.modal{display:none;position:fixed;inset:0;background:#10182899;z-index:50;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modalbox{background:#fff;border-radius:22px;padding:25px;width:min(700px,100%);max-height:90vh;overflow:auto;position:relative}.close{position:absolute;right:15px;top:15px;border:0;border-radius:9px;width:38px;height:38px}.modalbox h2{padding-right:48px}.infogrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.info{background:#f8f9fc;padding:12px;border-radius:12px}.info b{display:block;font-size:10px;color:#667085;text-transform:uppercase;margin-bottom:5px}.official{display:inline-block;background:#111827;color:#fff;text-decoration:none;border-radius:11px;padding:11px 14px;font-weight:850}
+@media(max-width:760px){.nav{padding:0 17px}.navlinks{display:none}.hero{padding:42px 20px}.wrap{padding:15px 12px 60px}.grid,.cards,.controls,.infogrid{grid-template-columns:1fr}.field.full{grid-column:auto}.form,.head{padding:22px}.results-head{align-items:start;flex-direction:column}.count{text-align:left}}
+</style>
+</head>
+<body>
+<header class="nav">
+<div class="brand"><div class="logo">EF</div>Eligibility Finder</div>
+<nav class="navlinks"><span onclick="scrollTopSmooth()">Home</span><span onclick="go('how')">How it works</span><span onclick="go('results')">Opportunities</span><span onclick="go('about')">About</span></nav>
+</header>
+
+<section class="hero">
+<div class="badge">✦ Smart opportunity matching</div>
+<h1>Find opportunities <span class="gradient">made for you.</span></h1>
+<p>Build one profile and discover scholarships, government schemes, jobs and internships. See why a result appeared and verify the final requirements from the official source.</p>
+</section>
+
+<div class="wrap">
+<div class="savedbar">
+<div class="savedhead"><strong>⭐ My Opportunities <span id="savedCount">(0)</span></strong><button type="button" id="viewSaved">View Saved</button></div>
+<div class="savedpanel" id="savedPanel"><h3>⭐ Saved Opportunities</h3><div id="savedList"></div></div>
+</div>
+
+<section class="panel">
+<div class="head"><div><h2>Build your profile</h2><p>More details = better matching. Missing information is never treated as proof of eligibility.</p></div><div class="step">STEP 1</div></div>
+<div class="form">
+<div class="grid">
+<div class="field"><label for="name">Full name</label><input id="name" type="text" placeholder="Enter your name"></div>
+<div class="field"><label for="age">Age</label><input id="age" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 19"><span class="hint">Enter whole years</span></div>
+<div class="field"><label for="state">State / domicile</label><select id="state"><option value="">Select state</option><option>Telangana</option><option>Andhra Pradesh</option><option>Karnataka</option><option>Tamil Nadu</option><option>Maharashtra</option><option>Other</option></select></div>
+<div class="field"><label for="gender">Gender</label><select id="gender"><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select></div>
+<div class="field"><label for="category">Category</label><select id="category"><option value="">Select category</option><option>SC</option><option>ST</option><option>BC / OBC</option><option>EWS</option><option>General</option><option>Other</option></select></div>
+<div class="field"><label for="income">Annual family income (₹)</label><input id="income" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 250000"><span class="hint">Numbers only</span></div>
+<div class="field"><label for="area">Residence area</label><select id="area"><option value="">Select area</option><option>Urban</option><option>Rural</option></select></div>
+<div class="field"><label for="course">Course</label><select id="course"><option value="">Select course</option><option>B.Tech / B.E.</option><option>B.Sc.</option><option>B.Com.</option><option>B.A.</option><option>Diploma</option><option>Postgraduate</option><option>Other</option></select></div>
+<div class="field"><label for="year">Current year of study</label><select id="year"><option value="">Select year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option><option>Final Year</option><option>Completed</option></select></div>
+<div class="field full"><label>Additional details</label><div class="checks">
+<label class="check"><input id="disability" type="checkbox"> Person with disability</label>
+<label class="check disability-pct" id="disabilityBox">Disability % <input id="disabilityPct" type="text" inputmode="numeric" placeholder="40"></label>
+<label class="check"><input id="orphan" type="checkbox"> Orphan / special family circumstance</label>
+<label class="check"><input id="merit" type="checkbox"> Meets required academic-merit condition</label>
+</div></div>
+</div>
+<div class="profile"><button class="saveprofile" type="button" id="saveProfile">💾 Save Profile</button><button class="clearprofile" type="button" id="clearProfile">↺ Clear Saved Profile</button><span class="msg" id="profileMsg"></span></div>
+<div class="error" id="formError"></div>
+<button class="find" type="button" id="findBtn">Find My Opportunities →</button>
+</div>
+</section>
+
+<section class="results" id="results">
+<div class="results-head"><div><h2 id="resultTitle">Your opportunities</h2><p>Review the match explanation and verify final eligibility on the official source.</p></div><div class="count" id="count">0<small>relevant results</small></div></div>
+<div class="controls"><input id="search" type="search" autocomplete="off" placeholder="Search scholarships, jobs, internships..."><select id="status"><option>All statuses</option><option>Potential match</option><option>Needs verification</option><option>Browse openings</option></select><select id="sort"><option value="relevance">Sort: Relevance</option><option value="deadline">Sort: Deadline</option><option value="type">Sort: Opportunity type</option><option value="az">Sort: A–Z</option></select></div><div id="smartSummary" style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:15px;color:#475467;font-size:13px;line-height:1.55"></div>
+<div class="filters" id="filters"></div>
+<div class="cards" id="cards"></div><div id="almostBox" style="display:none;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px"><h3 style="margin:0 0 6px">🟡 Almost eligible</h3><p style="margin:0 0 12px;color:#667085;font-size:13px">These are excluded by a known condition in the current profile. Review the reason before changing any details.</p><div id="almostList" style="display:grid;gap:9px"></div></div>
+<div id="assistantBox" style="margin-top:18px;background:linear-gradient(135deg,#fff,#f7f3ff);border:1px solid #e4ddff;border-radius:18px;padding:18px"><h3 style="margin:0 0 6px">✨ Smart Match Assistant</h3><p style="margin:0 0 12px;color:#667085;font-size:13px">A rule-based explanation layer using the profile and verified opportunity fields — not a replacement for the official eligibility rules.</p><div id="assistantText" style="font-size:13px;color:#344054;line-height:1.65"></div></div>
+</section>
+
+<section id="how" style="padding:60px 8px 10px"><h2>How it works</h2><p style="color:#667085;line-height:1.7">1. Build your profile → 2. Screen structured opportunity rules → 3. Review why a result appeared → 4. Confirm the final requirements on the official source.</p></section>
+<section id="about" style="padding:20px 8px"><h2>About</h2><p style="color:#667085;line-height:1.7">Eligibility Finder is an opportunity-discovery and screening tool. Official portals remain the final authority for current eligibility, deadlines and application requirements.</p></section>
+</div>
+
+<div class="modal" id="modal"><div class="modalbox"><button class="close" id="closeModal" type="button">×</button><div class="tag" id="mTag"></div><h2 id="mTitle"></h2><div class="infogrid"><div class="info"><b>Type</b><span id="mType"></span></div><div class="info"><b>Status</b><span id="mStatus"></span></div><div class="info"><b>Deadline</b><span id="mDeadline"></span></div><div class="info"><b>Last verified</b><span id="mVerified"></span></div></div><h3>Why this result appeared</h3><p id="mWhy"></p><h3>Benefits</h3><p id="mBenefits"></p><h3>Documents</h3><ul id="mDocs"></ul><h3>Important note</h3><p id="mNote"></p><a class="official" id="mLink" target="_blank" rel="noopener">Open official source →</a></div></div>
+
+<script>
+const DATA=[
+{id:"pragati",title:"AICTE – Pragati Scholarship for Girl Students (Technical Degree)",type:"Scholarship",icon:"🌸",tag:"NSP 2026–27",course:["B.Tech / B.E.","Diploma"],gender:["Female"],maxIncome:800000,firstYear:true,deadline:"31 Oct 2026",source:"https://scholarships.gov.in/All-Scholarships",verified:"30 Sep 2026",benefits:"Financial support under the current scheme; confirm the current amount and conditions in the official notice.",docs:["Identity/Aadhaar proof","Admission/enrolment proof","Income certificate","Bank details"],note:"Confirm current first-year/admission and institution conditions on the official portal."},
+{id:"saksham",title:"AICTE – Saksham Scholarship for Specially Abled Students",type:"Scholarship",icon:"♿",tag:"NSP 2026–27",course:["B.Tech / B.E.","Diploma"],maxIncome:800000,firstYear:true,disabilityMin:40,deadline:"31 Oct 2026",source:"https://scholarships.gov.in/All-Scholarships",verified:"30 Sep 2026",benefits:"Financial support under the current scheme; confirm the current amount and conditions in the official notice.",docs:["Identity/Aadhaar proof","Disability certificate","Admission/enrolment proof","Income certificate","Bank details"],note:"Verify the current disability and admission conditions on the official portal."},
+{id:"swanath",title:"AICTE – Swanath Scholarship Scheme (Technical Degree)",type:"Scholarship",icon:"🎓",tag:"NSP 2026–27",course:["B.Tech / B.E.","Diploma"],firstYear:true,special:true,deadline:"31 Oct 2026",source:"https://scholarships.gov.in/All-Scholarships",verified:"30 Sep 2026",benefits:"Financial support under the current scheme; confirm the current amount and conditions in the official notice.",docs:["Identity/Aadhaar proof","Admission/enrolment proof","Special circumstance proof","Bank details"],note:"The prototype captures only a broad special-circumstance flag; final eligibility needs official verification."},
+{id:"tg-bc",title:"Telangana Post-Matric Scholarship for BC Students",type:"Government Scheme",icon:"🏛️",tag:"Telangana ePASS 2026–27",course:["B.Tech / B.E.","B.Sc.","B.Com.","B.A.","Diploma","Postgraduate"],category:["BC / OBC"],state:["Telangana"],areaIncome:{Urban:200000,Rural:150000},deadline:"See ePASS portal",source:"https://telanganaepass.cgg.gov.in/",verified:"30 Sep 2026",benefits:"Post-matric scholarship/fee-reimbursement support subject to current Telangana ePASS rules.",docs:["Identity proof","Category certificate","Income certificate","Admission/enrolment proof","Bank details"],note:"Confirm the current ePASS income, institution and application conditions."},
+{id:"ncs",title:"National Career Service – Jobs & Career Opportunities",type:"Jobs",icon:"💼",tag:"Government of India",course:["B.Tech / B.E.","B.Sc.","B.Com.","B.A.","Diploma","Postgraduate","Other"],browse:true,source:"https://ncs.gov.in/",verified:"30 Sep 2026",benefits:"Access to job-search and career services. Individual vacancies have their own requirements.",docs:["Resume/CV","Education proof where requested"],note:"Eligibility is vacancy-specific; check each opening on NCS."},
+{id:"aicte-int",title:"AICTE National Internship Portal",type:"Internships",icon:"💻",tag:"AICTE",course:["B.Tech / B.E.","B.Sc.","B.Com.","B.A.","Diploma","Postgraduate","Other"],browse:true,source:"https://internship.aicte-india.org/",verified:"30 Sep 2026",benefits:"Access to internship listings. Individual internships have their own requirements.",docs:["Student/college details","Resume/CV","Academic details where requested"],note:"Check each listing for exact branch, year, skills and deadline."}
+];
+
+let current=[],active="All",profile=null;
+const $=id=>document.getElementById(id);
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function digits(el){el.value=el.value.replace(/\D/g,"")}
+function read(){return{name:$("name").value.trim(),age:Number($("age").value),state:$("state").value,gender:$("gender").value,category:$("category").value,income:Number($("income").value),area:$("area").value,course:$("course").value,year:$("year").value,disability:$("disability").checked,disabilityPct:Number($("disabilityPct").value||0),orphan:$("orphan").checked,merit:$("merit").checked}}
+function evaluate(o,p){
+ if(o.browse)return{status:"Browse openings",tone:"browse",checks:[],reason:"This service contains individual openings. Your profile can help you discover them, but each opening has its own requirements."};
+ let c=[];
+ if(o.state)c.push({ok:o.state.includes(p.state),t:`State: ${p.state}`});
+ if(o.gender)c.push({ok:o.gender.includes(p.gender),t:`Gender: ${p.gender}`});
+ if(o.category)c.push({ok:o.category.includes(p.category),t:`Category: ${p.category}`});
+ if(o.course)c.push({ok:o.course.includes(p.course),t:`Course: ${p.course}`});
+ if(o.maxIncome!=null)c.push({ok:p.income<=o.maxIncome,t:`Income ≤ ₹${o.maxIncome.toLocaleString("en-IN")}`});
+ if(o.areaIncome){if(!p.area)return{status:"Needs verification",tone:"verify",checks:c,reason:"Residence area is needed for the current area-specific income check."};let lim=o.areaIncome[p.area];c.push({ok:lim!=null&&p.income<=lim,t:`${p.area} income ≤ ₹${(lim||0).toLocaleString("en-IN")}`})}
+ if(o.firstYear)c.push({ok:p.year==="1st Year",t:"First-year study"});
+ if(o.disabilityMin!=null)c.push({ok:p.disability&&p.disabilityPct>=o.disabilityMin,t:`Disability ≥ ${o.disabilityMin}%`});
+ if(o.special&&!p.orphan)return{status:"Needs verification",tone:"verify",checks:c,reason:"The profile does not confirm one of the special circumstances represented by this simplified field."};
+ const bad=c.find(x=>!x.ok);if(bad)return{status:"Not eligible",tone:"bad",checks:c,reason:`A known condition is not matched: ${bad.t}.`};
+ return{status:"Potential match",tone:"good",checks:c,reason:"Your profile matches the conditions this prototype can screen. Confirm final eligibility on the official source."};
+}
+function saved(){try{return JSON.parse(localStorage.getItem("EF_saved_final")||"[]")}catch(e){return[]}}
+function updateSaved(){let a=saved();$("savedCount").textContent=`(${a.length})`;$("savedList").innerHTML=a.length?a.map(x=>`<div class="saveditem"><span>${esc(x.title)}</span><button type="button" data-remove="${esc(x.id)}">Remove</button></div>`).join(""):"<span style='color:#667085'>No saved opportunities yet.</span>";document.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{let x=saved().filter(v=>v.id!==b.dataset.remove);localStorage.setItem("EF_saved_final",JSON.stringify(x));updateSaved();renderFiltered()})}
+function isSaved(id){return saved().some(x=>x.id===id)}
+function toggleSave(id){let a=saved(),o=DATA.find(x=>x.id===id);if(!o)return;let i=a.findIndex(x=>x.id===id);if(i>=0)a.splice(i,1);else a.push({id,title:o.title});localStorage.setItem("EF_saved_final",JSON.stringify(a));updateSaved();renderFiltered()}
+function render(list){$("count").innerHTML=`${list.length}<small>relevant results</small>`;$("cards").innerHTML=list.length?list.map(o=>{let e=o.ev,s=isSaved(o.id);return`<article class="card"><div class="cardtop"><span class="icon">${o.icon}</span><span class="tag">${esc(o.tag)}</span></div><h3>${esc(o.title)}</h3><div class="meta"><span>${esc(o.type)}</span>${o.deadline?`<span>⏰ ${esc(o.deadline)}</span>`:""}<span class="status ${e.tone}">${esc(e.status)}</span></div><p>${esc(e.reason)}</p><div class="checksline">${e.checks.length?e.checks.map(c=>(c.ok?"✓ ":"✕ ")+esc(c.t)).join(" · "):"No profile-specific screening here."}</div><a href="${esc(o.source)}" target="_blank" rel="noopener">Official source →</a><br><button class="detail" type="button" data-detail="${o.id}">View details →</button> <button class="save ${s?"saved":""}" type="button" data-save="${o.id}">${s?"★ Saved":"☆ Save"}</button></article>`}).join(""):"<div style='grid-column:1/-1;background:#fff;padding:24px;border-radius:18px;color:#667085'>No opportunities match the current filters.</div>";document.querySelectorAll("[data-detail]").forEach(b=>b.onclick=()=>details(b.dataset.detail));document.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>toggleSave(b.dataset.save))}
+function deadlineRank(o){if(!o.deadline||o.deadline==="Varies"||o.deadline==="See ePASS portal")return 9999999999999;const d=Date.parse(o.deadline);return Number.isNaN(d)?9999999999999:d}
+function renderAlmost(q){const base=DATA.map(o=>({...o,ev:evaluate(o,profile)})).filter(o=>o.ev.status==="Not eligible").filter(o=>!q||`${o.title} ${o.type} ${o.tag}`.toLowerCase().includes(q)).slice(0,4);$("almostBox").style.display=base.length?"block":"none";$("almostList").innerHTML=base.map(o=>`<div style="padding:11px 13px;background:#fafafa;border-radius:12px;border:1px solid #eaecf0"><strong>${esc(o.title)}</strong><div style="color:#667085;font-size:12px;margin-top:4px">${esc(o.ev.reason)}</div></div>`).join("")}
+function renderAssistant(){if(!profile){$("assistantText").textContent="Complete your profile to receive a personalized explanation.";return}const potential=current.filter(o=>o.ev.status==="Potential match").length,verify=current.filter(o=>o.ev.status==="Needs verification").length,browse=current.filter(o=>o.ev.status==="Browse openings").length;$("assistantText").innerHTML=`<b>${esc(profile.name)}</b>, your current profile produced <b>${current.length}</b> relevant opportunities: <b>${potential}</b> potential matches, <b>${verify}</b> needing verification, and <b>${browse}</b> browse-only services. Open <b>View details</b> on any card to see why it matched, the benefits, document checklist, deadline/status, and official source. <span style="color:#667085">Final eligibility is always determined by the official scheme or opportunity provider.</span>`}
+function renderFiltered(){let q=$("search").value.trim().toLowerCase(),st=$("status").value,sort=$("sort").value;let list=current.filter(o=>(active==="All"||o.type===active)&&(st==="All statuses"||o.ev.status===st)&&(!q||`${o.title} ${o.type} ${o.tag}`.toLowerCase().includes(q)));if(sort==="deadline")list.sort((a,b)=>deadlineRank(a)-deadlineRank(b));if(sort==="type")list.sort((a,b)=>a.type.localeCompare(b.type));if(sort==="az")list.sort((a,b)=>a.title.localeCompare(b.title));render(list);renderAlmost(q);$("smartSummary").innerHTML=`<strong>${current.length} opportunities found.</strong> Use search, category filters, status and sorting to narrow your results.`;renderAssistant()}
+function makeFilters(){let t=["All",...new Set(current.map(x=>x.type))];$("filters").innerHTML=t.map((x,i)=>`<button type="button" class="filter ${i===0?"active":""}" data-filter="${esc(x)}">${esc(x)}</button>`).join("");document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");active=b.dataset.filter;renderFiltered()})}
+function showError(t){$("formError").textContent=t;$("formError").classList.add("show")}
+function clearError(){$("formError").classList.remove("show")}
+function run(){clearError();const p=read();if(!p.name||!Number.isFinite(p.age)||p.age<1||p.age>100||!p.state||!p.gender||!p.category||!Number.isFinite(p.income)||p.income<0||!p.course||!p.year){showError("Please complete the required profile fields before searching.");return}profile=p;localStorage.setItem("EF_profile_final",JSON.stringify(profile));current=DATA.map(o=>({...o,ev:evaluate(o,profile)})).filter(o=>o.ev.status!=="Not eligible");$("resultTitle").textContent=`${profile.name}, here are your matches`;$("results").style.display="block";active="All";makeFilters();$("search").value="";$("status").value="All statuses";$("sort").value="relevance";renderFiltered();$("results").scrollIntoView({behavior:"smooth",block:"start"})}
+function details(id){let o=DATA.find(x=>x.id===id);if(!o)return;let e=o.ev||evaluate(o,profile||read());$("mTag").textContent=o.tag;$("mTitle").textContent=o.title;$("mType").textContent=o.type;$("mStatus").textContent=e.status;$("mDeadline").textContent=o.deadline||"Varies";$("mVerified").textContent=o.verified;$("mWhy").textContent=e.reason;$("mBenefits").textContent=o.benefits;$("mDocs").innerHTML=o.docs.map(x=>`<li>${esc(x)}</li>`).join("");$("mNote").textContent=o.note;$("mLink").href=o.source;$("modal").classList.add("open")}
+function saveProfile(){$("profileMsg").textContent="";localStorage.setItem("EF_profile_final",JSON.stringify(read()));$("profileMsg").textContent="Profile saved ✓"}
+function loadProfile(){try{let p=JSON.parse(localStorage.getItem("EF_profile_final")||"null");if(!p)return;Object.keys(p).forEach(k=>{let e=$(k);if(!e)return;if(e.type==="checkbox")e.checked=!!p[k];else e.value=p[k]});$("disabilityBox").classList.toggle("show",!!p.disability);$("profileMsg").textContent="Saved profile loaded ✓"}catch(e){}}
+function clearProfile(){localStorage.removeItem("EF_profile_final");["name","age","state","gender","category","income","area","course","year","disabilityPct"].forEach(id=>$(id).value="");["disability","orphan","merit"].forEach(id=>$(id).checked=false);$("disabilityBox").classList.remove("show");$("profileMsg").textContent="Saved profile cleared"}
+function go(id){$(id).scrollIntoView({behavior:"smooth"})}function scrollTopSmooth(){window.scrollTo({top:0,behavior:"smooth"})}
+
+["age","income","disabilityPct"].forEach(id=>$(id).addEventListener("input",e=>digits(e.target)));
+$("findBtn").addEventListener("click",run);["name","age","income"].forEach(id=>$(id).addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("findBtn").click()}}));
+$("saveProfile").addEventListener("click",saveProfile);
+$("clearProfile").addEventListener("click",clearProfile);
+$("disability").addEventListener("change",e=>$("disabilityBox").classList.toggle("show",e.target.checked));
+$("search").addEventListener("input",renderFiltered);
+$("status").addEventListener("change",renderFiltered);$("sort").addEventListener("change",renderFiltered);
+$("viewSaved").addEventListener("click",()=>$("savedPanel").classList.toggle("open"));
+$("closeModal").addEventListener("click",()=>$("modal").classList.remove("open"));
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal")$("modal").classList.remove("open")});
+updateSaved();loadProfile();
+</script>
+</body>
+</html>
