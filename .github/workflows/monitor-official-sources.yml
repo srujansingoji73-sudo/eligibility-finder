@@ -1,0 +1,53 @@
+name: Monitor official sources
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check official sources
+        run: python scripts/monitor_sources.py
+
+      - name: Create change report
+        id: report
+        run: |
+          python - <<'PY'
+          import json, os
+          d=json.load(open('data/source-status.json'))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f"changed={d.get('changed_sources',0)}\n")
+              f.write(f"checked={d.get('sources_checked',0)}\n")
+          PY
+
+      - name: Commit monitoring status
+        run: |
+          git config user.name 'Smart Benefit Finder Monitor'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/source-status.json
+          git diff --cached --quiet || git commit -m 'chore: update source monitoring status'
+          git push
+
+      - name: Open review issue when a source changed
+        if: steps.report.outputs.changed != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data/source-status.json'))
+          urls='\n'.join('- '+u for u in d.get('changed_urls',[]))
+          body='''An official source changed since the previous automatic check.\n\nThe website has NOT silently changed eligibility rules. Review the source and update the relevant opportunity record only after verification.\n\nChanged sources:\n'''+urls
+          open('/tmp/issue.md','w').write(body)
+          PY
+          gh issue create --title "Official source change detected" --body-file /tmp/issue.md --label "source-update" || true
