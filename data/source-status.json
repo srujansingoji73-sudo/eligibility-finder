@@ -1,8 +1,313 @@
 {
-  "last_checked": null,
-  "last_checked_display": "Waiting for the first scheduled check",
-  "sources_checked": 0,
+  "last_checked": "2026-10-04T05:19:50.092361+00:00",
+  "last_checked_display": "04 Oct 2026, 05:19 AM UTC",
+  "sources_checked": 47,
   "changed_sources": 0,
   "changed_urls": [],
-  "sources": {}
+  "sources": {
+    "https://asdm.assam.gov.in/": {
+      "url": "https://asdm.assam.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "075b4b280d5403eb9a623f9797be7926b1c5a83eabd3192a2c6e0b71e9fbe87b",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://bcmbcmw.tn.gov.in/welfschemes.htm": {
+      "url": "https://bcmbcmw.tn.gov.in/welfschemes.htm",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>"
+    },
+    "https://cssda.cg.nic.in": {
+      "url": "https://cssda.cg.nic.in",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://dsd.jk.gov.in/": {
+      "url": "https://dsd.jk.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [Errno 101] Network is unreachable>"
+    },
+    "https://dsde.goa.gov.in": {
+      "url": "https://dsde.goa.gov.in",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "eaae679a4ce5e9f35405c937c9b712d58997f18ccdcb4b5b975780821a455379",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://graminskill.in/": {
+      "url": "https://graminskill.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "0ab49eea21e5d7d2654fd46fd2bb91c34cd022a86a5c400025f870b067baa3ad",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://hpkvn.in/": {
+      "url": "https://hpkvn.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>"
+    },
+    "https://hsdm.org.in": {
+      "url": "https://hsdm.org.in",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "3cca880bb77d0e26baef249362cd2fc7f41962ac28569c7468245e1982fd3746",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://intern.meity.gov.in/": {
+      "url": "https://intern.meity.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "b209b8f1bd35d9efcd8cad9c7ce2e0d89fa7d6e5d51172fdf574fb5cd7afc680",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://internship.aicte-india.org/": {
+      "url": "https://internship.aicte-india.org/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "aadd985efe7548b9bb44482398c388c70ef7eb76a48b563b6a817e39c925f09f",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://jnanabhumi.ap.gov.in/": {
+      "url": "https://jnanabhumi.ap.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "6adad40e423619fa0d3ecbaf64f5d4ffdec938033b36a62742b5ee3f270d00aa",
+      "content_type": "text/html"
+    },
+    "https://jsdm.jharkhand.gov.in/jsdm/cms/en/": {
+      "url": "https://jsdm.jharkhand.gov.in/jsdm/cms/en/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://kaushalkar.karnataka.gov.in/en": {
+      "url": "https://kaushalkar.karnataka.gov.in/en",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://kaushalya.mahaswayam.gov.in/": {
+      "url": "https://kaushalya.mahaswayam.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "6d2301be790b638e2bcf8c803cdb86570422817f79e16cc241758323e869517d",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://lesde.mizoram.gov.in/": {
+      "url": "https://lesde.mizoram.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "https://livelihoods.rajasthan.gov.in/": {
+      "url": "https://livelihoods.rajasthan.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "b0c9f7e1c79f5672020652c86070650bae89e7c228778c1cef1a219e533f217e",
+      "content_type": "text/html"
+    },
+    "https://lsdm.ladakh.gov.in/": {
+      "url": "https://lsdm.ladakh.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://mpskills.gov.in/": {
+      "url": "https://mpskills.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://naipunyam.ap.gov.in/": {
+      "url": "https://naipunyam.ap.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [Errno 101] Network is unreachable>"
+    },
+    "https://ncs.gov.in/": {
+      "url": "https://ncs.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "a3007975c01fb365083e18e05f0233d385aba7c019551b0110d02028824741ca",
+      "content_type": "text/html"
+    },
+    "https://nsedm.nagaland.gov.in/": {
+      "url": "https://nsedm.nagaland.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "aafd7e36d826290e9d6ba45fb932d30ba85c2f602db113b7dfecbad04cf16fa0",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://pbssd.gov.in": {
+      "url": "https://pbssd.gov.in",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://portals.moef.gov.in/internship/": {
+      "url": "https://portals.moef.gov.in/internship/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>"
+    },
+    "https://psds.org.in": {
+      "url": "https://psds.org.in",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "5d824ab2b735cd383e674955098cad4c28fccfd13b123ec99711795dad548666",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://scd.tn.gov.in/specialedu.php": {
+      "url": "https://scd.tn.gov.in/specialedu.php",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>"
+    },
+    "https://scholarships.gov.in/All-Scholarships": {
+      "url": "https://scholarships.gov.in/All-Scholarships",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "e5f482c5d8c9b7a90151dcf0a11bf80b5adc86866109c73a53452263f3945086",
+      "content_type": "text/html;charset=UTF-8"
+    },
+    "https://services.india.gov.in/service/detail/register-for-pm-internship-scheme-by-ministry-of-corporate-affairs-1": {
+      "url": "https://services.india.gov.in/service/detail/register-for-pm-internship-scheme-by-ministry-of-corporate-affairs-1",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [Errno 104] Connection reset by peer>"
+    },
+    "https://skill.arunachal.gov.in": {
+      "url": "https://skill.arunachal.gov.in",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "e4784b783e0314b9cc8dde7a6ef53fb9206af40ed8d57e33662239ce95637e9b",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://skillmissionbihar.org/": {
+      "url": "https://skillmissionbihar.org/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "b1e6a673bd60c18cf8ec833e4c7c38152e64c448cfee7765965764b5916250e5",
+      "content_type": "text/html"
+    },
+    "https://skillportal.tripura.gov.in/index.html": {
+      "url": "https://skillportal.tripura.gov.in/index.html",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://skills.gujarat.gov.in/": {
+      "url": "https://skills.gujarat.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [Errno 101] Network is unreachable>"
+    },
+    "https://skills.meghalaya.gov.in/": {
+      "url": "https://skills.meghalaya.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "51e7331955c09ebae43517a186776ed7f8bd6ae4c85ab41bce3cb43ba66e9949",
+      "content_type": "text/html"
+    },
+    "https://sulm.delhi.gov.in": {
+      "url": "https://sulm.delhi.gov.in",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://task.telangana.gov.in": {
+      "url": "https://task.telangana.gov.in",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://telanganaepass.cgg.gov.in/": {
+      "url": "https://telanganaepass.cgg.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "974402ddddffa8c09c9e07d5fef5bea1ae7d7c537b8aaa7dbe2e986135b6a5f4",
+      "content_type": "text/html;charset=ISO-8859-1"
+    },
+    "https://uatcms.pgrkam.com/": {
+      "url": "https://uatcms.pgrkam.com/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "https://umis.tn.gov.in/": {
+      "url": "https://umis.tn.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://utcsdm.chdtechnicaleducation.gov.in/": {
+      "url": "https://utcsdm.chdtechnicaleducation.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "18d7fcb4610d6161f97abe911d3c7ddfd4f841adaa89130557c160291eb1531d",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://www.india.gov.in/": {
+      "url": "https://www.india.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "3b389d810a9052a45d985770a4ef7d68304231659c12cd27ee7ff7e1671c8b86",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://www.kase.in/": {
+      "url": "https://www.kase.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "79fca7f6649948665f29194d0b1b6db5ca6156a5d9ec126e275d76ef7f64b031",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://www.mahadbt.maharashtra.gov.in/": {
+      "url": "https://www.mahadbt.maharashtra.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.mahadbt.maharashtra.gov.in'. (_ssl.c:1000)>"
+    },
+    "https://www.nhai.gov.in/": {
+      "url": "https://www.nhai.gov.in/",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "8e22b5a53ca64ccde9939ea645691f174883c4bc327da17cb5caa9ba81df48af",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "https://www.niti.gov.in/internship": {
+      "url": "https://www.niti.gov.in/internship",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "https://www.sikkim.gov.in/departments/state-institute-of-capacity-building": {
+      "url": "https://www.sikkim.gov.in/departments/state-institute-of-capacity-building",
+      "status": "ok",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "hash": "131f8b8d57bfcfb508dab24157ce3f4833faebebe81984beb9631a24f4ed73ad",
+      "content_type": "text/html; charset=utf-8"
+    },
+    "https://www.skillodisha.gov.in/": {
+      "url": "https://www.skillodisha.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://www.tnskill.tn.gov.in": {
+      "url": "https://www.tnskill.tn.gov.in",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error timed out>"
+    },
+    "https://www.upsdm.gov.in/": {
+      "url": "https://www.upsdm.gov.in/",
+      "status": "error",
+      "checked_at": "2026-10-04T05:19:50.092361+00:00",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1000)>"
+    }
+  }
 }
