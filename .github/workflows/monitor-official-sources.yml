@@ -12,6 +12,7 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,30 +25,59 @@ jobs:
         run: |
           python - <<'PY'
           import json, os
-          d=json.load(open('data/source-status.json'))
-          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
-              f.write(f"changed={d.get('changed_sources',0)}\n")
-              f.write(f"checked={d.get('sources_checked',0)}\n")
+
+          d = json.load(open('data/change-report.json'))
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"changed={d['summary']['changed_sources']}\n")
+              f.write(f"checked={d['summary']['sources_checked']}\n")
+              f.write(f"failed={d['summary']['failed_sources']}\n")
           PY
 
-      - name: Commit monitoring status
-        run: |
-          git config user.name 'Smart Benefit Finder Monitor'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/source-status.json
-          git diff --cached --quiet || git commit -m 'chore: update source monitoring status'
-          git push
-
-      - name: Open review issue when a source changed
+      - name: Create GitHub Issue for changed sources
         if: steps.report.outputs.changed != '0'
+        uses: actions/github-script@v9
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python - <<'PY'
-          import json
-          d=json.load(open('data/source-status.json'))
-          urls='\n'.join('- '+u for u in d.get('changed_urls',[]))
-          body='''An official source changed since the previous automatic check.\n\nThe website has NOT silently changed eligibility rules. Review the source and update the relevant opportunity record only after verification.\n\nChanged sources:\n'''+urls
-          open('/tmp/issue.md','w').write(body)
-          PY
-          gh issue create --title "Official source change detected" --body-file /tmp/issue.md --label "source-update" || true
+          CHANGED_COUNT: ${{ steps.report.outputs.changed }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            const report = JSON.parse(
+              fs.readFileSync('data/change-report.json', 'utf8')
+            );
+
+            const changed = report.changed_sources || [];
+
+            const urls = changed
+              .map(x => `- ${x.url}`)
+              .join('\n');
+
+            const body = [
+              '## ⚠️ Official source changes detected',
+              '',
+              `The Smart Benefit Finder monitor detected **${changed.length} changed official source(s)**.`,
+              '',
+              '### Changed sources',
+              urls || '- No URLs listed',
+              '',
+              '### Important',
+              'A detected page change does **not** automatically mean that eligibility rules changed.',
+              '',
+              'Review each official source manually before changing any eligibility rules in Smart Benefit Finder.',
+              '',
+              '### Recommended action',
+              '1. Open each changed official source.',
+              '2. Verify whether eligibility, benefits, deadlines, or requirements changed.',
+              '3. Update the website database only if the official rules actually changed.',
+              '4. Redeploy the website after the verified update.',
+              '',
+              `Monitor run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ Smart Benefit Finder: Official sources changed',
+              body: body
+            });
